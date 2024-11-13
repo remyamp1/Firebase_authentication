@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "359367635485",
+    "project_id": "fir-auth-68d65",
+    "storage_bucket": "fir-auth-68d65.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:359367635485:android:8fdc85e3166a1124f7ccf4",
+        "android_client_info": {
+          "package_name": "com.example.firebase_userauthentication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrFcB9r-v6Jio4I60bjmRxu1StDUOvsXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
