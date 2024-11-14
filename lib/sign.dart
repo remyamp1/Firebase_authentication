@@ -66,6 +66,7 @@ class _SignPageState extends State<SignPage> {
                 height: 50,
                 width: 300,
                 child: TextField(
+                  obscureText: true,
                   controller: _passwordController,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(), label: Text("Password")),

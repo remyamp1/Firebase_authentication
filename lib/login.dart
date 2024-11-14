@@ -11,31 +11,37 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-    TextEditingController _emaliController=TextEditingController();
-  TextEditingController _passwordController=TextEditingController();
+  TextEditingController _emaliController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
-Future <void> _sigin() async{
-  try {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(email: _emaliController.text.trim(),
-     password: _passwordController.text.trim());
-     print("User signed in");
-  } catch (e) {
-    print("Sign-in error:$e");
-    _showErrorDialog(e.toString());
+  Future<void> _sigin() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emaliController.text.trim(),
+          password: _passwordController.text.trim());
+      print("User signed in");
+    } catch (e) {
+      print("Sign-in error:$e");
+      _showErrorDialog(e.toString());
+    }
   }
-}
-void _showErrorDialog(String message){
-  showDialog(context: context, 
-  builder: (context)=>AlertDialog(
-    title: Text("Error"),
-    content: Text(message),
-    actions: [
-      TextButton(onPressed: (){
-        Navigator.of(context).pop();
-      }, child: Text("Ok"))
-    ],
-  ));
-}
+
+  void _showErrorDialog(String message) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text("Error"),
+              content: Text(message),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("Ok"))
+              ],
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,9 +85,9 @@ void _showErrorDialog(String message){
             ),
             ElevatedButton(
                 onPressed: () {
-
                   _sigin();
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()));
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 75, 75, 74),
@@ -101,7 +107,10 @@ void _showErrorDialog(String message){
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgotpasswordPage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ForgotpasswordPage()));
               },
               child: Text(
                 "Forgot password?",
