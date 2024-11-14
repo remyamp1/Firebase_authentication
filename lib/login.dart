@@ -57,9 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                       image: AssetImage("assets/images/login.jpeg"),
                       fit: BoxFit.cover)),
             ),
-            SizedBox(
-              height: 40,
-            ),
+            SizedBox(height:40,),
             SizedBox(
                 height: 50,
                 width: 300,
@@ -68,9 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: InputDecoration(
                       border: OutlineInputBorder(), label: Text("Email")),
                 )),
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height:20,),
             SizedBox(
                 height: 50,
                 width: 300,
@@ -80,9 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: InputDecoration(
                       border: OutlineInputBorder(), label: Text("Password")),
                 )),
-            SizedBox(
-              height: 15,
-            ),
+            SizedBox(height:15,),
             ElevatedButton(
                 onPressed: () {
                   _sigin();
@@ -99,12 +93,8 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(color: Colors.white),
                   ),
                 )),
-            SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              height: 10,
-            ),
+            SizedBox(height:10),
+            SizedBox(height:10,),
             GestureDetector(
               onTap: () {
                 Navigator.push(

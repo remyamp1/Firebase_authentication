@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_userauthentication/forgotpassword.dart';
 import 'package:firebase_userauthentication/login.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignPage extends StatefulWidget {
   const SignPage({super.key});
@@ -11,30 +12,52 @@ class SignPage extends StatefulWidget {
 }
 
 class _SignPageState extends State<SignPage> {
-  TextEditingController _emaliController=TextEditingController();
-  TextEditingController _passwordController=TextEditingController();
-
-  Future<void> _signUp()async{
+  Future<UserCredential?> loginWithGoogle() async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emaliController.text.trim(),
-       password: _passwordController.text.trim());
-       print("User signed up");
+      final GoogleSignIn googleSignIn = GoogleSignIn(
+          clientId:
+              "359367635485-dmkquks85o63mnfhbmrdck41khqdrldm.apps.googleusercontent.com");
+      final googleUser = await googleSignIn.signIn();
+      final googleAuth = await googleUser?.authentication;
+      final cred = GoogleAuthProvider.credential(
+          idToken: googleAuth?.idToken, accessToken: googleAuth?.accessToken);
+      return await FirebaseAuth.instance.signInWithCredential(cred);
+    } catch (e) {
+      print(e.toString());
+    }
+    return null;
+  }
+
+  TextEditingController _emaliController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  Future<void> _signUp() async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emaliController.text.trim(),
+          password: _passwordController.text.trim());
+      print("User signed up");
     } catch (e) {
       print("Sign-Up error:$e");
     }
   }
 
-  void _showErrorDialog(String message){
-    showDialog(context: context, builder: (context)=>AlertDialog(
-      title: Text("Error"),
-      content: Text("Message"),
-      actions: [
-        TextButton(onPressed: (){
-          Navigator.of(context).pop();
-        }, child: Text("Ok"))
-      ],
-    ));
+  void _showErrorDialog(String message) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text("Error"),
+              content: Text("Message"),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("Ok"))
+              ],
+            ));
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +98,8 @@ class _SignPageState extends State<SignPage> {
             ElevatedButton(
                 onPressed: () {
                   _signUp();
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=>LoginPage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginPage()));
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 110, 110, 109),
@@ -100,7 +124,8 @@ class _SignPageState extends State<SignPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,MaterialPageRoute(builder: (context)=>LoginPage()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginPage()));
                   },
                   child: Text(
                     "Login",
@@ -113,11 +138,39 @@ class _SignPageState extends State<SignPage> {
             SizedBox(height: 20),
             GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgotpasswordPage()));              },
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ForgotpasswordPage()));
+              },
               child: Text(
                 "Forgot password?",
                 style: TextStyle(color: Colors.blue),
               ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Signin With"),
+                SizedBox(
+                  width: 5,
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    await loginWithGoogle();
+                  },
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/google.jpeg"))),
+                  ),
+                )
+              ],
             )
           ],
         ),
